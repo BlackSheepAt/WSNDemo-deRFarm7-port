@@ -4,8 +4,8 @@
 //-----------------------------------------------
 // Disables board-specific peripherals support
 //-----------------------------------------------
-#define APP_DISABLE_BSP 1
-//#define APP_DISABLE_BSP 0
+//#define APP_DISABLE_BSP 1
+#define APP_DISABLE_BSP 0
 
 //-----------------------------------------------
 // Includes board-specific peripherals support in application.
@@ -17,10 +17,10 @@
 // Supported interfaces are platform and application dependent.
 //-----------------------------------------------
 #define APP_INTERFACE_USART 0x01
-#define APP_INTERFACE_VCP 0x02
+//#define APP_INTERFACE_VCP 0x02
 #define APP_INTERFACE_SPI 0x03
-#define APP_INTERFACE_UART 0x04
-#define APP_INTERFACE_USBFIFO 0x05
+//#define APP_INTERFACE_UART 0x04
+//#define APP_INTERFACE_USBFIFO 0x05
 
 //-----------------------------------------------
 // Atmel external memory identifiers.
@@ -33,9 +33,9 @@
 // Defines device role for boards witohut DIP switches. This parameter should not
 // be confused with Library Type parameter. Device role must match library type if
 // library type is not 'all'.
-#define APP_DEVICE_TYPE DEV_TYPE_COORDINATOR
+//#define APP_DEVICE_TYPE DEV_TYPE_COORDINATOR
 //Device is End Device
-//#define APP_DEVICE_TYPE DEV_TYPE_ENDDEVICE
+#define APP_DEVICE_TYPE DEV_TYPE_ENDDEVICE
 //Device is Router
 //#define APP_DEVICE_TYPE DEV_TYPE_ROUTER
 
@@ -171,6 +171,7 @@
 //  Can be set: at any time before network start
 //  Persistent: Yes
 #define CS_EXT_PANID 0xAAAAAAAAAAAAAAAALL
+//#define CS_EXT_PANID 0x00LL
 
 // 64-bit Unique Identifier (UID) determining the device extended address. If this
 // value is 0 stack will try to read hardware UID from external UID or EEPROM chip.
@@ -183,7 +184,7 @@
 //  C-type: ExtAddr_t
 //  Can be set: at any time before network start
 //  Persistent: Yes
-#define CS_UID 0xALL
+#define CS_UID 0xELL //E for "End device"
 
 // Determines whether the static or automatic addressing mode will be used for the
 // short address.

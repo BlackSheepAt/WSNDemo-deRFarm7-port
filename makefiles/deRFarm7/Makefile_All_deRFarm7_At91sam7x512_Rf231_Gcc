@@ -18,7 +18,7 @@ DEFINES = \
 INCLUDES = \
   -I./../.. \
   -I./../../include \
-  -I./../../../../BitCloud/Components/BSP/ATML_SAM7X_EK/include \
+  -I./../../../../BitCloud/Components/BSP/deRFarm7/include \
   -I./../../../../BitCloud/Components/HAL/drivers/include \
   -I./../../../../BitCloud/Components/HAL/drivers/USBClasses/common/include \
   -I./../../../../BitCloud/Components/HAL/drivers/USBClasses/VCP/include \
@@ -76,11 +76,11 @@ SRCS = \
   ./../../../../BitCloud/Components/HAL/drivers/USBClasses/common/src/usbSetupProcess.c \
   ./../../../../BitCloud/Components/HAL/drivers/USBClasses/common/src/usbDescriptors.c \
   ./../../../../BitCloud/Components/HAL/drivers/USBClasses/common/src/usbEnumeration.c \
-  ./../../../../BitCloud/Components/BSP/ATML_SAM7X_EK/src/i2ceeprom.c \
-  ./../../../../BitCloud/Components/BSP/ATML_SAM7X_EK/src/fakeBSP.c \
-  ./../../../../BitCloud/Components/BSP/ATML_SAM7X_EK/src/leds.c \
-  ./../../../../BitCloud/Components/BSP/ATML_SAM7X_EK/src/bspTaskManager.c \
-  ./../../../../BitCloud/Components/BSP/ATML_SAM7X_EK/src/joystick.c \
+  ./../../../../BitCloud/Components/BSP/deRFarm7/src/i2ceeprom.c \
+  ./../../../../BitCloud/Components/BSP/deRFarm7/src/fakeBSP.c \
+  ./../../../../BitCloud/Components/BSP/deRFarm7/src/leds.c \
+  ./../../../../BitCloud/Components/BSP/deRFarm7/src/bspTaskManager.c \
+  ./../../../../BitCloud/Components/BSP/deRFarm7/src/joystick.c \
   ./../../../../BitCloud/Components/ConfigServer/src/csPersistentMem.c \
   ./../../../../BitCloud/Components/ConfigServer/src/csMem.c \
   ./../../../../BitCloud/Components/ConfigServer/src/configServer.c 

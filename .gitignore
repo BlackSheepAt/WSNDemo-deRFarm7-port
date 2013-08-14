@@ -1,3 +1,7 @@
-objs
-list
-*.~
+objs/
+list/
+*~
+*.o
+*.bin
+*.hex
+*.elf

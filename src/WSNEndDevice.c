@@ -29,9 +29,7 @@
 #include <WSNMessageSender.h>
 #include <WSNCommand.h>
 
-#include <dbgu.h>
-
-#define LOG(x) dbgu_print_ascii(x);
+#include <logs.h>
 
 /*****************************************************************************
                               Prototypes section
@@ -88,7 +86,7 @@ static HAL_AppTimer_t deviceTimer;
 ******************************************************************************/
 static void appEndDeviceTaskHandler(void)
 {
-  LOG("appEndDeviceTaskHandler:: ");
+  //LOG("appEndDeviceTaskHandler:: ");
   switch (appDeviceState)
   {
     case WAITING_DEVICE_STATE:
@@ -167,7 +165,7 @@ static void appEndDeviceTaskHandler(void)
 ******************************************************************************/
 static void appEndDeviceInitialization(void)
 {
-  LOG("appEndDeviceInitialization:: ");
+  //LOG("appEndDeviceInitialization:: ");
   
   bool rxOnWhenIdleFlag = false;
 

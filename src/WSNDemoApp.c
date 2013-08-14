@@ -34,9 +34,7 @@
 #include <WSNCoord.h>
 #include <WSNRouter.h>
 #include <WSNEndDevice.h>
-#include <dbgPort.h>
-
-#define LOG(x) dbgu_print_ascii(x);
+#include <logs.h>
 
 #if APP_USE_OTAU == 1
 #include <WSNZclManager.h>
@@ -150,7 +148,7 @@ static void appInitSecurity(void);
 ******************************************************************************/
 void APL_TaskHandler(void)
 {
-  //LOG("appTaskHandler:: \n");
+  //LOG(__FUNCTION__);
   switch (appState)
   {
     case APP_INITING_STATE:
@@ -228,7 +226,7 @@ void APL_TaskHandler(void)
 ******************************************************************************/
 static void appInitialization(void)
 {
-  //LOG("appInit:: \n");
+  //LOG(__FUNCTION__);
   DeviceType_t deviceType;
 
 #if APP_DEVICE_TYPE == DEV_TYPE_COORDINATOR
@@ -289,7 +287,7 @@ static void appInitialization(void)
 ******************************************************************************/
 static void appInitSecurity(void)
 {
-  //////LOG("appInitSecurity:: \n");
+  //LOG(__FUNCTION__);
   uint64_t tcAddr;
 #if APP_DEVICE_TYPE == DEV_TYPE_COORDINATOR
   CS_ReadParameter(CS_APS_TRUST_CENTER_ADDRESS_ID, &tcAddr);
@@ -325,7 +323,7 @@ static void appInitSecurity(void)
 ******************************************************************************/
 static void appInitializePds(void)
 {
-  //LOG("appInitPDS:: \n");
+  //LOG(__FUNCTION__);
 #if defined(_COMMISSIONING_) && (APP_USE_PDS == 1)
   // Configure PDS to store and update parameters in NVM by BitCloud events
   PDS_StoreByEvents(BC_ALL_MEMORY_MEM_ID);
@@ -352,7 +350,7 @@ static void appInitializePds(void)
 ******************************************************************************/
 static void appZdpLeaveResp(ZDO_ZdpResp_t *zdpResp)
 {
-  //////LOG("appInitZdp:: \n");
+  //LOG(__FUNCTION__);
   if (ZDO_SUCCESS_STATUS == zdpResp->respPayload.status)
     appState = APP_STOP_STATE;
   else
@@ -368,7 +366,7 @@ static void appZdpLeaveResp(ZDO_ZdpResp_t *zdpResp)
 ******************************************************************************/
 static void appZdoStartNetworkConf(ZDO_StartNetworkConf_t *startInfo)
 {
-  //////LOG("appIStartNetworkConf:: \n");
+  //LOG(__FUNCTION__);
   manageBlinkingDuringRejoin(STOP_BLINKING);
 
   if (ZDO_SUCCESS_STATUS == startInfo->status)
@@ -400,7 +398,7 @@ static void appZdoStartNetworkConf(ZDO_StartNetworkConf_t *startInfo)
 ******************************************************************************/
 void ZDO_MgmtNwkUpdateNotf(ZDO_MgmtNwkUpdateNotf_t *nwkParams)
 {
-  //////LOG("NwkUpdate:: \n");
+  //LOG(__FUNCTION__);
   if (ZDO_NO_KEY_PAIR_DESCRIPTOR_STATUS == nwkParams->status)
   {
 #ifdef _LINK_SECURITY_
@@ -422,7 +420,7 @@ void ZDO_MgmtNwkUpdateNotf(ZDO_MgmtNwkUpdateNotf_t *nwkParams)
 ******************************************************************************/
 static void appZdoNwkUpdateHandler(ZDO_MgmtNwkUpdateNotf_t *updateParam)
 {
-  //////LOG("NwkUpdateHandler:: \n");
+  //LOG(__FUNCTION__);
   switch (updateParam->status)
   {
     case ZDO_NETWORK_LOST_STATUS:
@@ -478,7 +476,7 @@ static void appZdoNwkUpdateHandler(ZDO_MgmtNwkUpdateNotf_t *updateParam)
 ******************************************************************************/
 void ZDO_WakeUpInd(void)
 {
-  //////LOG("WakeUpInd:: \n");
+  //LOG(__FUNCTION__);
   if (deviceInterface.appDeviceWakeUpInd)
     deviceInterface.appDeviceWakeUpInd();
 }
@@ -492,7 +490,7 @@ void ZDO_WakeUpInd(void)
 ******************************************************************************/
 static void manageBlinkingDuringRejoin(BlinkingAction_t action)
 {
-  //////LOG("manageBlinking:: \n");
+  //LOG(__FUNCTION__);
   static bool run = false;
 
   if (START_BLINKING == action)
@@ -520,7 +518,7 @@ static void manageBlinkingDuringRejoin(BlinkingAction_t action)
 ******************************************************************************/
 static void startingNetworkTimerFired(void)
 {
-  //////LOG("nwkTimerFired:: \n");
+  //LOG(__FUNCTION__);
   visualizeNwkStarting();
 }
 /**************************************************************************//**
@@ -532,7 +530,7 @@ static void startingNetworkTimerFired(void)
 ******************************************************************************/
 void appReadLqiRssi(void)
 {
-  //////LOG("readLqiRssi:: \n");
+  //LOG(__FUNCTION__);
   ZDO_GetLqiRssi_t lqiRssi;
 
   lqiRssi.nodeAddr = appNwkInfo.parentShortAddr;
@@ -550,7 +548,7 @@ void appReadLqiRssi(void)
 ******************************************************************************/
 static void appPostGlobalTask(void)
 {
-  //LOG("postGlobalTask:: \n");
+  //LOG(__FUNCTION__);
   SYS_PostTask(APL_TASK_ID);
 }
 
@@ -563,7 +561,7 @@ static void appPostGlobalTask(void)
 ******************************************************************************/
 void appPostSubTaskTask(void)
 {
-  //////LOG("postSubTask:: \n");
+  //LOG(__FUNCTION__);
   if (APP_IN_NETWORK_STATE == appState)
   {
     appTaskFlags.appSubTaskPosted = true;
@@ -580,7 +578,7 @@ void appPostSubTaskTask(void)
 ******************************************************************************/
 void appPostCmdHandlerTask(void)
 {
-  //////LOG("postCmdHandlerTask:: \n");
+  //LOG(__FUNCTION__);
   if (APP_IN_NETWORK_STATE == appState)
   {
     appTaskFlags.appCmdHandlerTaskPosted = true;
@@ -597,7 +595,7 @@ void appPostCmdHandlerTask(void)
 ******************************************************************************/
 void appPostMsgSenderTask(void)
 {
-  ////LOG("postMsgSenderTask:: \n");
+  //LOG(__FUNCTION__);
   if (APP_IN_NETWORK_STATE == appState)
   {
     appTaskFlags.appMsgSenderTaskPosted = true;
@@ -614,7 +612,7 @@ void appPostMsgSenderTask(void)
 ******************************************************************************/
 void appLeaveNetwork(void)
 {
-  ////LOG("leaveNetwork:: \n");
+  //LOG(__FUNCTION__);
   if (APP_IN_NETWORK_STATE == appState)
   {
     appState = APP_LEAVING_NETWORK_STATE;
@@ -646,7 +644,7 @@ bool appIsSleepPermitted(void)
 ******************************************************************************/
 void appPcCmdReceived(void *command, uint8_t cmdSize)
 {
-  ////LOG("pcCmdReceived:: \n");
+  //LOG(__FUNCTION__);
   AppCommand_t *pCommand = (AppCommand_t *)command;
 
   appCreateCommand(&pCommand);
@@ -665,7 +663,7 @@ void appPcCmdReceived(void *command, uint8_t cmdSize)
 ******************************************************************************/
 void appStartIdentifyVisualization(uint16_t blinkDuration, uint16_t blinkPeriod)
 {
-  ////LOG("startIdentifyVisualisation:: \n");
+  //LOG(__FUNCTION__);
   if (blinkDuration && blinkPeriod)
   {
     identifyDuration = blinkDuration;
@@ -687,7 +685,7 @@ void appStartIdentifyVisualization(uint16_t blinkDuration, uint16_t blinkPeriod)
 ******************************************************************************/
 static void identifyTimerFired(void)
 {
-  ////LOG("identifyTimerFired:: \n");
+  //LOG(__FUNCTION__);
   visualizeIdentity();
 
   identifyDuration -= MIN(identifyDuration, identifyTimer.interval);
@@ -709,7 +707,7 @@ static void identifyTimerFired(void)
 ******************************************************************************/
 bool appGetCmdDescriptor(AppCommandDescriptor_t *pCmdDesc, uint8_t cmdId)
 {
-  ////LOG("appGetCmdDescriptor:: \n");
+  //LOG(__FUNCTION__);
   if (deviceInterface.appDeviceCmdDescTable)
   {
     for (uint8_t i = 0; i < deviceInterface.appDeviceCmdDescTableSize; i++)
@@ -736,7 +734,7 @@ bool appGetCmdDescriptor(AppCommandDescriptor_t *pCmdDesc, uint8_t cmdId)
 ******************************************************************************/
 static void appApsDataIndHandler(APS_DataInd_t *ind)
 {
-  ////LOG("appApsDataIndHandler:: \n");
+  //LOG(__FUNCTION__);
   AppCommand_t *pCommand = (AppCommand_t *)ind->asdu;
 
   visualizeAirRxFinished();
@@ -753,7 +751,7 @@ static void appApsDataIndHandler(APS_DataInd_t *ind)
 ******************************************************************************/
 void ZDO_BindIndication(ZDO_BindInd_t *bindInd)
 {
-  ////LOG("ZDO_BindIndication:: \n");
+  //LOG(__FUNCTION__);
   (void)bindInd;
 }
 
@@ -766,7 +764,7 @@ void ZDO_BindIndication(ZDO_BindInd_t *bindInd)
 ******************************************************************************/
 void ZDO_UnbindIndication(ZDO_UnbindInd_t *unbindInd)
 {
-  ////LOG("ZDO_UnbindIndication:: \n");
+  //LOG(__FUNCTION__);
   (void)unbindInd;
 }
 #endif //_BINDING_
@@ -781,14 +779,16 @@ void ZDO_UnbindIndication(ZDO_UnbindInd_t *unbindInd)
 int main(void)
 {
   //TRACE_CONFIGURE(DBGU_STANDARD, 115200, BOARD_MCK);
-  configure_dbgu();
-  LOG("##### Lifecycle begin ##### \n");
-  LOG("SysInit() - entry \n");
+  //configure_dbgu();
+  //LOG("##### Lifecycle begin #####");
+  //LOG("SysInit() - entry");
   SYS_SysInit();
-  LOG("SysInit() - exit \n");
+  //LOG("SysInit() - exit");
   for (;;)
   {
+    ////LOG("SYS_RunTask - entry");
     SYS_RunTask();
+    ////LOG("SYS_RunTask - exit");
   }
 }
 //eof WSNDemoApp.c
