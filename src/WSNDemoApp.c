@@ -676,6 +676,20 @@ void appStartIdentifyVisualization(uint16_t blinkDuration, uint16_t blinkPeriod)
   }
 }
 
+void appSetRelayState(uint8_t number, uint8_t state)
+{
+	//BSP_ToggleLed(number);
+	if(1 == state)
+	{
+		BSP_OnLed(number);
+	}
+	else
+	{
+		BSP_OffLed(number);
+	}
+
+}
+
 /**************************************************************************//**
   \brief Identify timer event.
 

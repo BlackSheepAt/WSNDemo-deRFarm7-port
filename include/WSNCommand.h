@@ -33,6 +33,7 @@
 #define APP_NETWORK_INFO_COMMAND_ID    0x01
 #define APP_IDENTIFY_COMMAND_ID        0x10
 #define APP_IDENTIFY_NOTF_COMMAND_ID   0x11
+#define APP_RELAYS_CTRL_ID		   	   0x12
 
 #if APP_USE_DEVICE_CAPTION == 1
 #define APP_MAX_DEVICE_CAPTION_SIZE   16U
@@ -105,6 +106,14 @@ typedef struct PACK _AppIdentifyNotfPayload_t
   ExtAddr_t     srcAddress;
 } AppIdentifyNotfPayload_t;
 
+/** Payload of direct message command */
+typedef struct PACK _AppRelaysCtrlPayload_t
+{
+  ExtAddr_t     dstAddress;
+  uint8_t 		relayNumber;
+  uint8_t 		relayState;
+} AppRelaysCtrlPayload_t;
+
 typedef struct PACK _AppCommand_t
 {
   uint8_t                    id;
@@ -113,6 +122,7 @@ typedef struct PACK _AppCommand_t
     AppNwkInfoCmdPayload_t           nwkInfo;
     AppIdentifyReqPayload_t          identify;
     AppIdentifyNotfPayload_t         identifyNotf;
+    AppRelaysCtrlPayload_t			 relaysCtrl;
   } payload;
 } PACK AppCommand_t;
 

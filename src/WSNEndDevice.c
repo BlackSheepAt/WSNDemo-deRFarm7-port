@@ -36,6 +36,7 @@
 ******************************************************************************/
 bool appEndDeviceIdentifyCmdHandler(AppCommand_t *pCommand);
 bool appEndDeviceNwkInfoCmdHandler(AppCommand_t *pCommand);
+bool appEndDeviceRelaysCtrlCmdHandler(AppCommand_t *pCommand);
 
 /******************************************************************************
                               Constants section
@@ -46,7 +47,8 @@ bool appEndDeviceNwkInfoCmdHandler(AppCommand_t *pCommand);
 PROGMEM_DECLARE(AppCommandDescriptor_t appEndDeviceCmdDescTable[]) =
 {
   APP_COMMAND_DESCRIPTOR(APP_NETWORK_INFO_COMMAND_ID, appEndDeviceNwkInfoCmdHandler),
-  APP_COMMAND_DESCRIPTOR(APP_IDENTIFY_COMMAND_ID, appEndDeviceIdentifyCmdHandler)
+  APP_COMMAND_DESCRIPTOR(APP_IDENTIFY_COMMAND_ID, appEndDeviceIdentifyCmdHandler),
+  APP_COMMAND_DESCRIPTOR(APP_RELAYS_CTRL_ID, appEndDeviceRelaysCtrlCmdHandler)
 };
 
 /*****************************************************************************
@@ -298,6 +300,14 @@ bool appEndDeviceIdentifyCmdHandler(AppCommand_t *pCommand)
                                 pCommand->payload.identify.blinkPeriodMs);
 
   return true;
+}
+
+bool appEndDeviceRelaysCtrlCmdHandler(AppCommand_t *pCommand)
+{
+	//LOG(__FUNCTION__);
+	appSetRelayState(pCommand->payload.relaysCtrl.relayNumber,
+					 pCommand->payload.relaysCtrl.relayState);
+	return true;
 }
 
 /**************************************************************************//**

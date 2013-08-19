@@ -51,6 +51,7 @@ void visualizeNwkStarting(void)
 **************************************************************************/
 void visualizeNwkStarted(void)
 {
+  BSP_OffLed(LED_FIRST);
   BSP_OnLed(LED_SECOND);
 }
 

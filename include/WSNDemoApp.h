@@ -196,6 +196,9 @@ void appPcCmdReceived(void *command, uint8_t cmdSize);
 ******************************************************************************/
 void appStartIdentifyVisualization(uint16_t duration, uint16_t period);
 
+
+void appSetRelayState(uint8_t number, uint8_t state);
+
 /**************************************************************************//**
   \brief Reads LQI and RSSI for a parent node into appNwkInfo structure.
 
