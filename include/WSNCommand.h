@@ -33,7 +33,10 @@
 #define APP_NETWORK_INFO_COMMAND_ID    0x01
 #define APP_IDENTIFY_COMMAND_ID        0x10
 #define APP_IDENTIFY_NOTF_COMMAND_ID   0x11
-#define APP_RELAYS_CTRL_ID		   	   0x12
+#define APP_CUSTOM_MSG_ID		       0x13
+
+//Device messages
+#define DEV_RELAYS_CTRL_ID		   	   0x12
 
 #if APP_USE_DEVICE_CAPTION == 1
 #define APP_MAX_DEVICE_CAPTION_SIZE   16U
@@ -45,6 +48,11 @@
 
 // Command descriptor construction macro
 #define APP_COMMAND_DESCRIPTOR(ID, SERV_VECT) {.commandID = ID, .serviceVector = SERV_VECT}
+
+//Device command descriptor construction macro
+#define DEV_COMMAND_DESCRIPTOR(ID, SERV_VECT) {.messageID = ID, .serviceVector = SERV_VECT}
+
+#define MAX_CUSTOM_MSG_PAYLOAD_LENGTH 128
 
 /*****************************************************************************
                               Types section
@@ -107,12 +115,13 @@ typedef struct PACK _AppIdentifyNotfPayload_t
 } AppIdentifyNotfPayload_t;
 
 /** Payload of direct message command */
-typedef struct PACK _AppRelaysCtrlPayload_t
+typedef struct PACK _AppCustomMsgPayload_t
 {
+  uint8_t		msgId;
   ExtAddr_t     dstAddress;
-  uint8_t 		relayNumber;
-  uint8_t 		relayState;
-} AppRelaysCtrlPayload_t;
+  uint8_t 		devCmdPayload[MAX_CUSTOM_MSG_PAYLOAD_LENGTH];
+} AppCustomMsgPayload_t;
+
 
 typedef struct PACK _AppCommand_t
 {
@@ -122,7 +131,7 @@ typedef struct PACK _AppCommand_t
     AppNwkInfoCmdPayload_t           nwkInfo;
     AppIdentifyReqPayload_t          identify;
     AppIdentifyNotfPayload_t         identifyNotf;
-    AppRelaysCtrlPayload_t			 relaysCtrl;
+    AppCustomMsgPayload_t			 customMsg;
   } payload;
 } PACK AppCommand_t;
 
@@ -149,5 +158,11 @@ typedef struct _AppCmdDescriptor_t
   uint8_t                  commandID;     //!< Command identificator
   CommandServiceVector_t   serviceVector; //!< Pointer to handling fuction
 } AppCommandDescriptor_t;
+
+typedef struct _DevCmdDescriptor_t
+{
+  uint8_t                  messageID;     //!< Command identificator
+  CommandServiceVector_t   serviceVector; //!< Pointer to handling fuction
+} DevCmdDescriptor_t;
 
 #endif // _WSNCOMMAND_H

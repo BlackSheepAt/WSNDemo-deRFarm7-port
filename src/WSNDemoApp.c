@@ -678,7 +678,6 @@ void appStartIdentifyVisualization(uint16_t blinkDuration, uint16_t blinkPeriod)
 
 void appSetRelayState(uint8_t number, uint8_t state)
 {
-	//BSP_ToggleLed(number);
 	if(1 == state)
 	{
 		BSP_OnLed(number);
@@ -748,9 +747,9 @@ bool appGetCmdDescriptor(AppCommandDescriptor_t *pCmdDesc, uint8_t cmdId)
 ******************************************************************************/
 static void appApsDataIndHandler(APS_DataInd_t *ind)
 {
-  //LOG(__FUNCTION__);
+//  LOG(__FUNCTION__);
   AppCommand_t *pCommand = (AppCommand_t *)ind->asdu;
-
+//  LOG_hex(pCommand->id);
   visualizeAirRxFinished();
   appCreateCommand(&pCommand);
 }
@@ -792,9 +791,8 @@ void ZDO_UnbindIndication(ZDO_UnbindInd_t *unbindInd)
 **************************************************************************/
 int main(void)
 {
-  //TRACE_CONFIGURE(DBGU_STANDARD, 115200, BOARD_MCK);
-  //configure_dbgu();
-  //LOG("##### Lifecycle begin #####");
+//  configure_dbgu();
+//  LOG("##### Lifecycle begin #####");
   //LOG("SysInit() - entry");
   SYS_SysInit();
   //LOG("SysInit() - exit");

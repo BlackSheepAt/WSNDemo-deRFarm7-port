@@ -34,9 +34,13 @@
 /*****************************************************************************
                               Prototypes section
 ******************************************************************************/
+//App messages handlers
 bool appEndDeviceIdentifyCmdHandler(AppCommand_t *pCommand);
 bool appEndDeviceNwkInfoCmdHandler(AppCommand_t *pCommand);
-bool appEndDeviceRelaysCtrlCmdHandler(AppCommand_t *pCommand);
+bool appEndDeviceCustomMsgCmdHandler(AppCommand_t *pCommand);
+
+//Device commands handlers
+bool endDeviceRelaysControlHandler(AppCommand_t *pCommand);
 
 /******************************************************************************
                               Constants section
@@ -48,7 +52,12 @@ PROGMEM_DECLARE(AppCommandDescriptor_t appEndDeviceCmdDescTable[]) =
 {
   APP_COMMAND_DESCRIPTOR(APP_NETWORK_INFO_COMMAND_ID, appEndDeviceNwkInfoCmdHandler),
   APP_COMMAND_DESCRIPTOR(APP_IDENTIFY_COMMAND_ID, appEndDeviceIdentifyCmdHandler),
-  APP_COMMAND_DESCRIPTOR(APP_RELAYS_CTRL_ID, appEndDeviceRelaysCtrlCmdHandler)
+  APP_COMMAND_DESCRIPTOR(APP_CUSTOM_MSG_ID, appEndDeviceCustomMsgCmdHandler)
+};
+
+PROGMEM_DECLARE(DevCmdDescriptor_t endDeviceDevCmdDescTable[]) =
+{
+  DEV_COMMAND_DESCRIPTOR(DEV_RELAYS_CTRL_ID, endDeviceRelaysControlHandler)
 };
 
 /*****************************************************************************
@@ -302,12 +311,26 @@ bool appEndDeviceIdentifyCmdHandler(AppCommand_t *pCommand)
   return true;
 }
 
-bool appEndDeviceRelaysCtrlCmdHandler(AppCommand_t *pCommand)
+bool appEndDeviceCustomMsgCmdHandler(AppCommand_t *pCommand)
 {
 	//LOG(__FUNCTION__);
-	appSetRelayState(pCommand->payload.relaysCtrl.relayNumber,
-					 pCommand->payload.relaysCtrl.relayState);
+	for (uint8_t i = 0; i < sizeof(endDeviceDevCmdDescTable); i++)
+	    {
+	      if (pCommand->payload.customMsg.msgId == endDeviceDevCmdDescTable[i].messageID)
+	      {
+	        endDeviceDevCmdDescTable[i].serviceVector(pCommand);
+	        break;
+	      }
+	    }
 	return true;
+}
+
+bool endDeviceRelaysControlHandler(AppCommand_t *pCommand)
+{
+	//LOG(__FUNCTION__);
+		appSetRelayState(pCommand->payload.customMsg.devCmdPayload[0],
+						 pCommand->payload.customMsg.devCmdPayload[1]);
+		return true;
 }
 
 /**************************************************************************//**
