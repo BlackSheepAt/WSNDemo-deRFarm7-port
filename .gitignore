@@ -5,3 +5,6 @@ list/
 *.bin
 *.hex
 *.elf
+*.srec
+*.map
+makefiles/deRFarm7/*/

@@ -1,24 +1,25 @@
 COMPONENTS_PATH = ./../../../../BitCloud/Components
 APP_NAME = WSNDemo
-CONFIG_NAME = All_Sec_Sam7xEk_At91sam7x256_Rf231_Gcc
+CONFIG_NAME = All_Sec_deRFarm7_At91sam7x512_Rf231_Gcc
 LIST_PATH = $(CONFIG_NAME)/List
 EXE_PATH = $(CONFIG_NAME)/Exe
 OBJ_PATH = $(CONFIG_NAME)/Obj
 
-include ./../../../../BitCloud/lib/Makerules_At91sam7x256_Gcc
+include ./../../../../BitCloud/lib/Makerules_At91sam7x512_Gcc
 
 DEFINES = \
-  -DBOARD_SAM7X_EK \
-  -DAT91SAM7X256 \
+  -DBOARD_deRFarm7 \
+  -DAT91SAM7X512 \
   -DHAL_48MHz \
   -DSTACK_TYPE_ALL \
   -DAT86RF231 \
-  -DSTANDARD_SECURITY_MODE 
+  -DSTANDARD_SECURITY_MODE \
+  -D_SECURITY_=STANDARD_SECURITY_MODE \
 
 INCLUDES = \
   -I./../.. \
   -I./../../include \
-  -I./../../../../BitCloud/Components/BSP/ATML_SAM7X_EK/include \
+  -I./../../../../BitCloud/Components/BSP/deRFarm7/include \
   -I./../../../../BitCloud/Components/HAL/drivers/include \
   -I./../../../../BitCloud/Components/HAL/drivers/USBClasses/common/include \
   -I./../../../../BitCloud/Components/HAL/drivers/USBClasses/VCP/include \
@@ -39,8 +40,8 @@ INCLUDES = \
   -I./../../../../BitCloud/Components/PersistDataServer/include/private \
   -I./../../../../BitCloud/Components/Security/TrustCentre/include \
   -I./../../../../BitCloud/Components/Security/ServiceProvider/include \
-  -I./../../../../BitCloud/Components/HAL/arm7tdmi/at91sam7x256/common/include \
-  -I./../../../../BitCloud/Components/HAL/arm7tdmi/at91sam7x256/atmlEvalKit/include \
+  -I./../../../../BitCloud/Components/HAL/arm7tdmi/at91sam7x512/common/include \
+  -I./../../../../BitCloud/Components/HAL/arm7tdmi/at91sam7x512/atmlEvalKit/include \
   -I./../../../../BitCloud/Components/MAC_PHY/include \
   -I./../../../../BitCloud/Components/MAC_PHY/MAC_ENV/include \
   -I./../../../../BitCloud/Components/MAC_PHY/MAC_HWI/include \
@@ -49,8 +50,8 @@ INCLUDES = \
   -I./../../../../BitCloud/Components/MAC_PHY/MAC_HWD_PHY/RF231_RF212/MAC_HWD/include 
 
 LIBS = \
-  ./../../../../BitCloud/lib/libHAL_Sam7xEkRf2xx_At91sam7x256_48MHz_Gcc.a \
-  ./../../../../BitCloud/lib/libBc_All_Sec_At91sam7x256_Rf231_Gcc.a \
+  ./../../../../BitCloud/lib/libHAL_deRFarm7_At91sam7x512_48Mhz_Gcc.a \
+  ./../../../../BitCloud/lib/libBc_All_Sec_At91sam7x512_Rf231_Gcc.a \
   ./../../../../BitCloud/lib/FirmwareBoot_Gcc.o 
 
 SRCS = \
@@ -76,16 +77,16 @@ SRCS = \
   ./../../../../BitCloud/Components/HAL/drivers/USBClasses/common/src/usbSetupProcess.c \
   ./../../../../BitCloud/Components/HAL/drivers/USBClasses/common/src/usbDescriptors.c \
   ./../../../../BitCloud/Components/HAL/drivers/USBClasses/common/src/usbEnumeration.c \
-  ./../../../../BitCloud/Components/BSP/ATML_SAM7X_EK/src/i2ceeprom.c \
-  ./../../../../BitCloud/Components/BSP/ATML_SAM7X_EK/src/fakeBSP.c \
-  ./../../../../BitCloud/Components/BSP/ATML_SAM7X_EK/src/leds.c \
-  ./../../../../BitCloud/Components/BSP/ATML_SAM7X_EK/src/bspTaskManager.c \
-  ./../../../../BitCloud/Components/BSP/ATML_SAM7X_EK/src/joystick.c \
+  ./../../../../BitCloud/Components/BSP/deRFarm7/src/i2ceeprom.c \
+  ./../../../../BitCloud/Components/BSP/deRFarm7/src/fakeBSP.c \
+  ./../../../../BitCloud/Components/BSP/deRFarm7/src/leds.c \
+  ./../../../../BitCloud/Components/BSP/deRFarm7/src/bspTaskManager.c \
+  ./../../../../BitCloud/Components/BSP/deRFarm7/src/joystick.c \
   ./../../../../BitCloud/Components/ConfigServer/src/csPersistentMem.c \
   ./../../../../BitCloud/Components/ConfigServer/src/csMem.c \
   ./../../../../BitCloud/Components/ConfigServer/src/configServer.c 
 
-PREINCLUDE = MakerulesBc_All_Sec_At91sam7x256_Rf231_Gcc.h
+PREINCLUDE = MakerulesBc_All_Sec_At91sam7x512_Rf231_Gcc.h
 
 CSRCS = $(filter %.c, $(SRCS))
 OBJS = $(addprefix $(OBJ_PATH)/, $(notdir %/$(subst .c,.o,$(CSRCS))))

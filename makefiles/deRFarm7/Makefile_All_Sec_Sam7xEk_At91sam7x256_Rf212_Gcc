@@ -1,6 +1,6 @@
 COMPONENTS_PATH = ./../../../../BitCloud/Components
 APP_NAME = WSNDemo
-CONFIG_NAME = All_Sec_Sam7xEk_At91sam7x256_Rf212_Gcc
+CONFIG_NAME = All_Sec_Sam7xEk_At91sam7x512_Rf212_Gcc
 LIST_PATH = $(CONFIG_NAME)/List
 EXE_PATH = $(CONFIG_NAME)/Exe
 OBJ_PATH = $(CONFIG_NAME)/Obj
